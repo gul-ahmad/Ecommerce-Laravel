@@ -33,7 +33,7 @@
                         <div class="quantity">
                             <div class="quantity-input">
                                 <input type="text" name="product-quatity" value="{{$item->qty}}" data-max="120" pattern="[0-9]*" >									
-{{--     public function IncreaseQuantity($rowId) --}}
+
                                 <a class="btn btn-increase" href="#" wire:click.prevent ="IncreaseQuantity('{{$item->rowId}}')"></a>
                                 <a class="btn btn-reduce" href="#"  wire:click.prevent ="DecreaseQuantity('{{$item->rowId}}')"></a>
                             </div>

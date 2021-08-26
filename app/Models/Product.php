@@ -10,4 +10,13 @@ class Product extends Model
     use HasFactory;
     protected $table ="products";
 
+    public function Category()
+    {
+    
+        return $this->belongsTo(Category::class,'category_id');
+
+
+
+    }
+
 }

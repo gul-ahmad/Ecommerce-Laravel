@@ -8,27 +8,30 @@ class Cartcomponent extends Component
 {
     public function IncreaseQuantity($rowId)
     {
-       $product =Cart::get($rowId);
+       $product =Cart::instance('cart')->get($rowId);
        $qty =$product->qty+1;
-       Cart::update($rowId,$qty);
+       Cart::instance('cart')->update($rowId,$qty);
+       $this->emitTo('cart-list-count-component', 'refreshCartCount');
 
     }
     public function DecreaseQuantity($rowId)
     {
-       $product =Cart::get($rowId);
+       $product =Cart::instance('cart')->get($rowId);
        $qty =$product->qty-1;
-       Cart::update($rowId,$qty);
-
+       Cart::instance('cart')->update($rowId,$qty);
+       $this->emitTo('cart-list-count-component', 'refreshCartCount');
     }
     public function destroy($rowId)
     {
-        Cart::remove($rowId);
+        Cart::instance('cart')->remove($rowId);
+        $this->emitTo('cart-list-count-component', 'refreshCartCount');
         session()->flash('success_message','Item has been deleted');
 
     }
     public function destroyAll()
     {
-        Cart::destroy();
+        Cart::instance('cart')->destroy();
+        $this->emitTo('cart-list-count-component', 'refreshCartCount');
         session()->flash('success_message','Cart cleared');
 
     }

@@ -5,6 +5,8 @@ namespace App\Http\Livewire\Admin;
 use App\Models\Category;
 use Livewire\Component;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+
 
 
 class AdminEditCategoryComponent extends Component
@@ -28,8 +30,25 @@ class AdminEditCategoryComponent extends Component
     $this->slug =Str::slug($this->name);
 
     }
+    //defined this function to ingnore the unique validation for current editing category
+    protected function category_rules()
+    {
+        return [
+            'name' => 'required',
+            'slug' => [
+                'required',
+                Rule::unique('categories')->ignore($this->category_id)
+            ]
+        ];
+    }
+    //liverwire hook method for validation
+    public function updated($fields)
+    {
+        $this->validateOnly($fields, $this->category_rules());
+    }
     public function updateCategory()
     {
+      $this->validate($this->category_rules());
     $category =Category::find($this->category_id);
     
     $category->name =$this->name;

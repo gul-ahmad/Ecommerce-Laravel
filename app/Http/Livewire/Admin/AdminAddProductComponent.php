@@ -25,11 +25,33 @@ class AdminAddProductComponent extends Component
     public $image;
     public $category_id ;
 
+    //Below is livewire rules for validations
+    protected $rules = [
+      'name'=>'required',
+      'slug'=>'required|unique::products',
+      'short_description'=>'required',
+      'description'=>'required',
+      'regular_price'=>'required|numeric',
+      'sale_price'=>'required',
+      'SKU'=>'required',
+      'stock_status'=>'required',
+      'featured'=>'required',
+      'quantity'=>'required|numeric',
+      'image'=>'required|mimes::jpeg,png',
+      'category_id'=>'required',
+  ];
+     //Below is livewire custom messages way to show errors
+  protected $messages = [
+      'category_id.required' => 'Please select the category!',
+      'SKU.required' => 'SKU is required!'
+  ];
     
     public function mount()
     {
       $this->stock_status ='instock';
       $this->featured =0;
+    //  $this->addError('category_id', 'Category is required.');
+
     }
     public function generateSlug()
     {
@@ -37,8 +59,30 @@ class AdminAddProductComponent extends Component
    $this->slug =Str::slug($this->name,'-');
 
     }
+    //Below is livewire hook method for validation
+    public function updated($property)
+    {
+
+      $this->validateOnly($property);
+
+    }
     public function storeProduct()
     {
+      $this->validate([
+        'name'=>'required',
+        'slug'=>'required|unique::products',
+        'short_description'=>'required',
+        'description'=>'required',
+        'regular_price'=>'required|numeric',
+        'sale_price'=>'required',
+        'SKU'=>'required',
+        'stock_status'=>'required',
+        'featured'=>'required',
+        'quantity'=>'required|numeric',
+        'image'=>'required|mimes::jpeg,png',
+        'category_id'=>'required',
+        
+    ]);
         $product =new Product();
         $product->name =$this->name;
         $product->slug=$this->slug;

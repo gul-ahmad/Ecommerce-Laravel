@@ -10,16 +10,44 @@ use Cart;
 class DetailsComponent extends Component
 {
     public $slug;
+    //for increasing and decreasing the quantity in details page of Product we are using $qty
+    public $qty;
     public function mount($slug)
     {
         $this->slug =$slug;
+        $this->qty = 1;
 
     }
+   
     public function store($product_id,$product_name,$product_price)
     {
-      Cart::add($product_id,$product_name,1,$product_price)->associate('App\Models\Product');
+   /*    Cart::add($product_id,$product_name,1,$product_price)->associate('App\Models\Product');
+      Session()->flash('success_message','Item Added Successfully');
+      return redirect()->route('product.cart'); */
+      Cart::instance('cart')->add($product_id,$product_name, $this->qty,$product_price)->associate('App\Models\Product');
+      //emiting the event to cartlist count component to update the value
+      $this->emitTo('cart-list-count-component', 'refreshCartCount');
+
       Session()->flash('success_message','Item Added Successfully');
       return redirect()->route('product.cart');
+
+    }
+    //not working
+    public function increaseQuantity()
+    {
+
+        $this->qty++;
+
+    }
+    //not working
+    public function decreaseQuantity()
+    {
+        if($this->qty > 1 )
+        {
+
+             $this->qty--;
+
+        }
 
     }
     public function render()

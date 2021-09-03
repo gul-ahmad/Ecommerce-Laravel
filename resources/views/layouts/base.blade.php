@@ -95,6 +95,9 @@
 										<li class="menu-item" >
                                             <a title="Manage Tabs" href="{{route('admin.homecategories')}}">Manage Tabs</a>
                                         </li>
+										<li class="menu-item" >
+                                            <a title="Manage Coupons" href="{{route('admin.coupons')}}">Manage Coupons</a>
+                                        </li>
 									
                                           <form id="logout-form" method="POST" action="{{route('logout')}}">
                                             @csrf

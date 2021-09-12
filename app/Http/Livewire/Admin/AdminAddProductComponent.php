@@ -28,7 +28,7 @@ class AdminAddProductComponent extends Component
     //Below is livewire rules for validations
     protected $rules = [
       'name'=>'required',
-      'slug'=>'required|unique::products',
+      'slug'=>'required|unique:products',
       'short_description'=>'required',
       'description'=>'required',
       'regular_price'=>'required|numeric',
@@ -70,7 +70,7 @@ class AdminAddProductComponent extends Component
     {
       $this->validate([
         'name'=>'required',
-        'slug'=>'required|unique::products',
+        'slug'=>'required|unique:products',
         'short_description'=>'required',
         'description'=>'required',
         'regular_price'=>'required|numeric',

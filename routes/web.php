@@ -22,6 +22,7 @@ use App\Http\Livewire\Checkoutcomponent;
 use App\Http\Livewire\DetailsComponent;
 use App\Http\Livewire\HomeComponent;
 use App\Http\Livewire\Shopcomponent;
+use App\Http\Livewire\ThankYouComponent;
 use App\Http\Livewire\User\UserDashboardComponent;
 use App\Http\Livewire\WishListComponent;
 use Illuminate\Support\Facades\Route;
@@ -43,10 +44,11 @@ Route::get('/', function () {
 Route::get('/',HomeComponent::class);
 Route::get('/shop',Shopcomponent::class);
 Route::get('/cart',Cartcomponent::class)->name('product.cart');
-Route::get('/checkout',Checkoutcomponent::class);
+Route::get('/checkout',Checkoutcomponent::class)->name('checkout');
 Route::get('/product/{slug}',DetailsComponent::class)->name('product.details');
 Route::get('/product-category/{category_slug}',CategoryComponent::class)->name('product.category');
 Route::get('/wishlist',WishListComponent::class)->name('product.wishlist');
+Route::get('/thankyou',ThankYouComponent::class)->name('thankyou');
 
 
 /* Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

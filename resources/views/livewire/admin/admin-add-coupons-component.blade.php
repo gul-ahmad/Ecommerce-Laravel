@@ -14,12 +14,12 @@
                     </div>
                     <div class="panel-body">
                         <form action="" class="form-horizontal" wire:submit.prevent="storeCoupon" >
-                            @if(Session::has('success_message'))
+                           {{--  @if(Session::has('success_message'))
                             <div class="alert alert-success" role="alert">
                              {{Session::get('success_message')}}
 
                             </div>
-                            @endif
+                            @endif --}}
                             <div class="form-group">
                                 <label for="name" class="col-md-4 control-label">Coupon Code</label>
                                 <div class="col-md-4">
@@ -52,6 +52,13 @@
                                 <div class="col-md-4">
                                     <input type="text" name="cart_value" id="value" placeholder="Cart value" class="form-control input-md" wire:model="cart_value">
                                     @error('cart_value') <span class="error text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="value" class="col-md-4 control-label">Expiry Date</label>
+                                <div class="col-md-4" wire:ignore>
+                                    <input type="text" name="expiray_date" id="expiray_date" placeholder="Expiry Date" class="form-control input-md" wire:model="expiray_date">
+                                    @error('expiray_date') <span class="error text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
 
@@ -93,8 +100,22 @@ window.addEventListener('swal:modal', event => {
     });
 });
 
-
-
-
 </script>
+@push('scripts')
+    <script>
+
+      $(function(){
+        $('#expiray_date').datetimepicker({
+            format:'Y-MM-DD'
+        })
+        .on('dp.change',function(ev){
+          var data =$('#expiray_date').val();
+          @this.set('expiray_date',data);
+
+        });
+
+      });
+
+    </script>
+@endpush
 

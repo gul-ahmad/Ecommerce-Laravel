@@ -11,6 +11,7 @@ class AdminCouponsComponent extends Component
     public $type;
     public $value;
     public $cart_value;
+    public $expiray_date;
 
 
     protected $listeners = ['deleteCoupon'];
@@ -38,45 +39,6 @@ class AdminCouponsComponent extends Component
           ]);
       }
   
-      
-    //Below is livewire hook method for validation
-    public function updated($property)
-    {
-
-      $this->validateOnly($property);
-
-    }
-    public function storeCoupon()
-    {
-      $this->validate([
-       
-        'code'=>'required|unique::coupons',
-        'type'=>'required',
-        'value'=>'required|numeric',
-        'cart_value'=>'required|numeric',
-        
-    ]);
-        $coupon =new Coupon();
-        $coupon->code =$this->code;
-        $coupon->type=$this->type;
-        $coupon->value =$this->value;
-        $coupon->cart_value=$this->cart_value;
-      
-       $coupon->save();
-       //below for sweetalert
-       $this->dispatchBrowserEvent( 'swal:modal',[
-        'type' =>'success',
-        'title' =>'Coupon Added Successfully!',
-        'text' =>'',
-      ]);
-
-      $this->code ='';
-      $this->type='';
-      $this->value ='';
-      $this->cart_value='';
-       
-
-    }
     public function render()
     {
         $coupons =Coupon::all();

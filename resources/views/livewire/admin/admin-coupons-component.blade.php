@@ -37,6 +37,7 @@
                                  <th>Coupons Type</th>
                                  <th>Coupon Value</th>
                                  <th>Coupon Cart Value</th>
+                                 <th>Expiry Date</th>
                                  <th>Actions</th>
                              </tr>
                          </thead>
@@ -45,19 +46,21 @@
                             <tr>
                                 <td>{{$coupon->id}}</td>
                                 <td>{{$coupon->code}}</td>
-                                @if ($coupon->type =='fixed')
                                 <td>{{$coupon->type}}</td>
+                                @if ($coupon->type =='fixed')
+                                <td>{{$coupon->value}}</td>
                                 
                                     
                                 @else
-                                <td>{{$coupon->type}}%</td>
+                                <td>{{$coupon->value}}%</td>
                                     
                                 @endif
                                 
-                                <td>{{$coupon->cart}}</td>
+                               
                                 <td>{{$coupon->cart_value}}</td>
+                                <td>{{$coupon->expiray_date}}</td>
                                 <td>
-                                 <a href="{{route('admin.editcoupon',['coupon_id'=>$coupon->id])}}" ><i class="fa fa-edit fa-2x"></i></a>   
+                                 <a href="{{route('admin.editcoupons',['coupon_id'=>$coupon->id])}}" ><i class="fa fa-edit fa-2x"></i></a>   
                                  <button type="button" wire:click ="deleteConfirm({{$coupon->id}})" style="margin-left: 10px"><i class="fa fa-times fa-2x text-danger"></i></button>   
                                 </td>
 
@@ -91,7 +94,7 @@ window.addEventListener('swal:confirm', event => {
     })
     .then((willDelete) => {
       if (willDelete) {
-        window.livewire.emit('deleteCategory',event.detail.id);
+        window.livewire.emit('deleteCoupon',event.detail.id);
       }
     });
 });
